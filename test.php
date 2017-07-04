@@ -15,12 +15,12 @@
             CURLOPT_COOKIE         => "mid=WU1KXQAEAAExA74tpuuzlfM31rtk; rur=ATN; ig_vw=1366; ig_pr=1; fbm_124024574287414=base_domain=.instagram.com; fbsr_124024574287414=AAcPokD_Nyx2pKTH36o4MoPrhkNi_zDrdQvgmXHZO-k.eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsImNvZGUiOiJBUUFmYmRGVjN0U1AzR1MtZ1dtVU1uY2U0Z2kyUkpTZnh5TTB3cUVvYlFnSVRoUHlfN1h5RFVzLWNjSmlVNVZWeGU1bHN2c2R0OVZja2FTQXotR1BXVkc4V2ZMeHJjY21TLUNBYk0wQ2Z6cmMtYTNrSHZ4X3h6b24zdVZVSHFjM1gwYUFVQkRpNDY0dVEtbEktY2xHZG53UW9KM2ZHMnBaRHZnYmxaV01QNFdUWUZBZG56aGI3SXhQbThmNVk4ZG1KLVhNVjVBSkxkV0lxSzJkRnVudkZfRFh3MkJMc2ZrbzRkVjh2cDE2UXZVSEZPVGhVd21IN08wUW9rR2EwUDFtNWlCQ1V4bDdMc2tsbWE0ZS1kZGQxVDAtRVZrUVIyWFpzWjVqTGZCZHNqRi0xUldQZ3h0cUN1RWQ5OXBNM2V0SVY3NUtpX2JoVzc5NHhsQk9SWXJDVXFheSIsImlzc3VlZF9hdCI6MTQ5ODc2MTEyMCwidXNlcl9pZCI6Ijc4ODYwODEzNCJ9;"
         );
 
-        $ch      = curl_init( "https://www.instagram.com/explore/tags/chriscrossroads/?__a=1" );
+        $ch      = curl_init( "https://www.instagram.com/explore/tags/cat/?__a=1" );
         curl_setopt_array( $ch, $options );
         $rough_content = curl_exec( $ch );
         $err     = curl_errno( $ch );
         $errmsg  = curl_error( $ch );
         $header  = curl_getinfo( $ch );
         curl_close( $ch );
-          echo explode("\r\n\r\n",$rough_content)[1];
+        echo explode("\r\n\r\n",$rough_content)[1]; //CHANGED
 ?>

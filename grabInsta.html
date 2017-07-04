@@ -4,14 +4,89 @@
    <meta charset="utf-8">
    <script type="text/javascript" src="d3/d3.min.js"></script>
    <script type="text/javascript" src="scripts/jquery-3.2.1.min.js"></script>
+   <link rel="icon" href="images/favicon.ico">
  </head>
  <body>
-   <div>
-     <p></p>
-   </div>
  </body>
+   <div>
+   </div>
+
  <script>
-/*go to https://www.instagram.com/explore/tags/(WHATEVER_TAG)/?__a=1
+
+ var IdValue = 0;
+ $.getJSON("test.php", function(result){
+   //console.dir(result.tag.media.nodes);
+       $.each(result.tag.media.nodes, function(i, field){
+         //console.dir(field);
+           $("div").append(reSize(field.display_src));
+});
+IdValue = parseInt(result.tag.media.nodes[0].id); //converts this field to int
+});
+
+setInterval(function(){
+  $.getJSON("test.php", function(result){
+
+    //console.dir(result.tag.media.nodes);
+        $.each(result.tag.media.nodes, function(i, field){
+          //console.dir(field);
+          if (parseInt(field.id) > IdValue)
+            $("div").append(reSize(field.display_src));
+});
+IdValue = parseInt(result.tag.media.nodes[0].id);
+});
+
+},3000);
+
+function reSize (source){
+
+  var result = document.createElement("img");
+
+  result.width = "200";
+  result.height = "200";
+  result.src = source;
+
+  xt = new XMLHttpRequest();
+  xt.open("GET",source,true);
+  xt.responseType = "blob";
+  xt.onreadystatechange = function(){
+    if(this.readyState == 4){
+      var aBlob = new Blob([this.response],{type:'image/jpeg'});
+      var reader = new FileReader();
+
+      reader.onloadend = function(){
+        var k = new Uint8ClampedArray(reader.result);
+        glitch(k);
+
+        var bBlob = new Blob([k],{type:'blob'});
+        var url = URL.createObjectURL(bBlob);
+
+      result.src = url;
+      console.log(url);
+      console.log(source);
+
+    };
+    reader.readAsArrayBuffer(aBlob);
+    }
+  };
+  xt.send();
+
+  return result;
+}
+
+function glitch (z){
+  var times = parseInt(Math.random()*10+1);
+
+  for (var i=0; i < times;i++){
+      var pos = parseInt(Math.random()*(z.length - 60)+ 60);
+      var length = parseInt(Math.random()*200);
+      for(var t = 0; t <length && (pos+t) <z.length;t++){
+        z[pos+t] = parseInt(Math.random()* 255);
+      }
+  }
+
+}
+
+/* IDEA (old) go to https://www.instagram.com/explore/tags/(WHATEVER_TAG)/?__a=1
  point to media, nodes 0, thumbnail_src
 
 This can possibly be inside a timer
@@ -20,31 +95,8 @@ This can possibly be inside a timer
     // Now use response to do some d3 magic
 });
  */
- var IdValue = 0;
- $.getJSON("test.php", function(result){
-   console.dir(result.tag.media.nodes);
-       $.each(result.tag.media.nodes, function(i, field){
-         console.dir(field);
-           $("div").append("<img src='" + field.display_src + "'></img>");
-});
-IdValue = parseInt(result.tag.media.nodes[0].id);
-});
 
-setInterval(function(){
-  $.getJSON("test.php", function(result){
-
-    console.dir(result.tag.media.nodes);
-        $.each(result.tag.media.nodes, function(i, field){
-          console.dir(field);
-          if (parseInt(field.id) > IdValue)
-            $("div").append("<img src='" + field.display_src + "'></img>");
-});
-IdValue = parseInt(result.tag.media.nodes[0].id);
-});
-
-},3000);
-
-/* function ajax_request() {
+/* IDEA (old) Sfunction ajax_request() {
 
 requestInfo='';
 
