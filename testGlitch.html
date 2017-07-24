@@ -23,6 +23,8 @@
  <script>
  "use strict";
 
+//makes inheritence
+//(boiler)setup
 var _createClass = function () { function defineProperties(target, props)
   { for (var i = 0; i < props.length; i++)
     { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true;
@@ -31,7 +33,10 @@ var _createClass = function () { function defineProperties(target, props)
       { if (protoProps) defineProperties(Constructor.prototype, protoProps);
         if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor))
+  { throw new TypeError("Cannot call a class as a function"); }
+}
 
 var windowW = window.innerWidth;
 var windowH = window.innerHeight;
@@ -47,6 +52,7 @@ function setup() {
         isLoaded = true;
     });
 }
+//end setup
 
 function draw() {
     clear();
@@ -107,6 +113,7 @@ var Glitch = function () {
         }
     }
 
+//an array of functions, gets targeted
     _createClass(Glitch, [{
         key: "replaceData",
         value: function replaceData(destImg, srcPixels) {
@@ -294,7 +301,7 @@ var Glitch = function () {
                 return;
             }
 
-            // flow line
+            // flow line (forEach takes Value, Index, Array)
             this.flowLineImgs.forEach(function (v, i, arr) {
                 arr[i].pixels = _this.flowLine(_this.imgOrigin, v);
                 if (arr[i].pixels) {

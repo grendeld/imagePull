@@ -35,7 +35,7 @@ setInterval(function(){
         $.each(result.tag.media.nodes, function(i, field){
           //console.dir(field);
           if (parseInt(field.id) > IdValue)
-            $("div").append(reSize(field.display_src));
+            $("div").prepend(reSize(field.display_src));
 });
 IdValue = parseInt(result.tag.media.nodes[0].id);
 });
