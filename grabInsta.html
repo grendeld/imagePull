@@ -7,19 +7,16 @@
    <link rel="icon" href="images/favicon.ico">
    <style>
    /*div{
-     overflow-y: scroll;
    }*/
    </style>
  </head>
  <body>
- </body>
    <div>
    </div>
-
+ </body>
  <script>
-
- var IdValue = 0;
- $.getJSON("test.php", function(result){
+  var IdValue = 0;
+  $.getJSON("test.php", function(result){
    //console.dir(result.tag.media.nodes);
        $.each(result.tag.media.nodes, function(i, field){
          //console.dir(field);
@@ -45,10 +42,12 @@ IdValue = parseInt(result.tag.media.nodes[0].id);
 function reSize (source){
 
   var result = document.createElement("img");
+  /*var IdValue = parseInt(result.tag.media.nodes[0].id)*/
 
   result.width = "200";
   result.height = "200";
   result.src = source;
+  result.id = IdValue;
 
   xt = new XMLHttpRequest();
   xt.open("GET",source,true);
@@ -66,9 +65,9 @@ function reSize (source){
         var url = URL.createObjectURL(bBlob);
 
       result.src = url;
+
       console.log(url);
       console.log(source);
-
     };
     reader.readAsArrayBuffer(aBlob);
     }
