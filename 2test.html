@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="utf-8">
+   <script type="text/javascript" src="d3/d3.min.js"></script>
+   <script type="text/javascript" src="scripts/jquery-3.2.1.min.js"></script>
+   <script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/p5.js"></script>
+   <link rel="icon" href="images/favicon.ico">
+   <style>
+
+   </style>
+ </head>
+ <body>
+ </body>
+   <div>
+   </div>
+
+ <script>
+
+ var IdValue = 0;
+ $.getJSON("test.php", function(result){
+  //console.dir(result.tag.media.nodes);
+      $.each(result.tag.media.nodes, function(i, field){
+        //console.dir(field);
+          $("div").append(reSize(field.display_src));
+});
+IdValue = parseInt(result.tag.media.nodes[0].id); //converts this field to int
+});
+
+setInterval(function(){
+ $.getJSON("test.php", function(result){
+
+   //console.dir(result.tag.media.nodes);
+       $.each(result.tag.media.nodes, function(i, field){
+         //console.dir(field);
+         if (parseInt(field.id) > IdValue)
+           $("div").prepend(reSize(field.display_src));
+
+});
+IdValue = parseInt(result.tag.media.nodes[0].id);
+});
+
+},3000);
+
+function glitchInterval(){
+  reGlitch();
+},1000);
+
+function reSize (source){
+
+ var result = document.createElement("img");
+ /*var IdValue = parseInt(result.tag.media.nodes[0].id)*/
+
+ result.width = "327";
+ result.height = "327";
+ result.src = source;
+ result.id = IdValue;
+ xt = new XMLHttpRequest();
+ xt.open("GET",source,true);
+ xt.responseType = "blob";
+ xt.onreadystatechange = function(){
+   if(this.readyState == 4){
+     var aBlob = new Blob([this.response],{type:'image/jpeg'});
+     var reader = new FileReader();
+
+     reader.onloadend = function(){
+       var k = new Uint8ClampedArray(reader.result);
+       glitch(k);
+
+       var bBlob = new Blob([k],{type:'blob'});
+       var url = URL.createObjectURL(bBlob);
+
+     result.src = url;
+
+     console.log(url);
+     console.log(source);
+   };
+   reader.readAsArrayBuffer(aBlob);
+   }
+ };
+ xt.send();
+
+ return result;
+}
+
+function glitch (z){
+ var times = parseInt(Math.random()*10+1);
+
+ for (var i=0; i < times;i++){
+     var pos = parseInt(Math.random()*(z.length - 60)+ 60);
+     var length = parseInt(Math.random()*200);
+     for(var t = 0; t <length && (pos+t) <z.length;t++){
+       z[pos+t] = parseInt(Math.random()* 255);
+     }
+ }
+
+}
+
+ </script>
+
+ </html>
