@@ -16,12 +16,11 @@
             //the above cookie might change, keep in mind
         );
 
-        $ch      = curl_init( "https://www.instagram.com/explore/tags/glitchrock/?__a=1" );
-        curl_setopt_array( $ch, $options );
-        $rough_content = curl_exec( $ch );
-        $err     = curl_errno( $ch );
-        $errmsg  = curl_error( $ch );
-        $header  = curl_getinfo( $ch );
-        curl_close( $ch );
-        echo explode("\r\n\r\n",$rough_content)[1]; //CHANGED
-?>
+        $ch      = curl_init("https://www.instagram.com/explore/tags/atticus/?__a=1");
+        curl_setopt_array($ch, $options);
+        $rough_content = curl_exec($ch);
+        $err     = curl_errno($ch);
+        $errmsg  = curl_error($ch);
+        $header  = curl_getinfo($ch);
+        curl_close($ch);
+        echo explode("\r\n\r\n", $rough_content)[1]; //CHANGED
