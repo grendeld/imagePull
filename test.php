@@ -2,7 +2,7 @@
         header('Content-Type: application/json');
         $options = array(
             CURLOPT_RETURNTRANSFER => true,     // return web page
-            CURLOPT_HEADER         => true,     //return headers in addition to content
+            CURLOPT_HEADER         => false,     //return headers in addition to content
             CURLOPT_FOLLOWLOCATION => true,     // follow redirects
             CURLOPT_ENCODING       => "",       // handle all encodings
             CURLOPT_AUTOREFERER    => true,     // set referer on redirect
@@ -16,11 +16,10 @@
             //the above cookie might change, keep in mind
         );
 
-        $ch      = curl_init("https://www.instagram.com/explore/tags/atticus/?__a=1");
+        $ch      = curl_init("https://www.instagram.com/explore/tags/tacos/?__a=1");
         curl_setopt_array($ch, $options);
         $rough_content = curl_exec($ch);
         $err     = curl_errno($ch);
         $errmsg  = curl_error($ch);
         $header  = curl_getinfo($ch);
-        curl_close($ch);
-        echo explode("\r\n\r\n", $rough_content)[1]; //CHANGED
+        echo (/*explode("\r\n\r\n",*/ $rough_content); //CHANGED Nov 15, removed explode by changig CURLOPT_HEADER to false
